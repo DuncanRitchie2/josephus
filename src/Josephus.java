@@ -17,20 +17,50 @@ public class Josephus {
     }
 
     public static int josephus(int n, int i) {
-        boolean[] soldiersAlive = new boolean[n];
-        int currentSoldier = 0;
+        boolean[] soldiers = new boolean[n];  // true if alive, false if dead.
+        for (int a = 0; a < soldiers.length; a++) {
+            soldiers[a] = true;
+        }
+        int curr = 1;
+        int j = 1;   // A soldier will be killed whenever j == i.
+
+        while (numTrue(soldiers)>1) {
+            if (curr == n+1) {curr = 1;};
+
+            if (soldiers[curr-1]) {
+
+                if (j == i) {
+                    soldiers[curr-1] = false;
+                    curr++;
+                    j = 1;
+                }
+
+                else {
+                    curr++;
+                    j++;
+                }
+
+            }
+            else {
+                curr++;
+            }
 
 
-        while (numTrue(soldiersAlive)>1) {
 
+            System.out.println(booleanArrayToString(soldiers));
         }
 
-        System.out.println(booleanArrayToString(soldiersAlive));
-        return 1;
+
+        for (int b = 1; b < soldiers.length+1; b++) {
+            if (soldiers[b-1]) {return b;}
+        }
+
+        System.out.println("The for-loop to find the 'true' value failed!");
+        return n;
     }
 
     public static void main(String[] args) {
-        System.out.println(josephus(40,1));
+        System.out.println(josephus(5,3));
     }
 
 }
